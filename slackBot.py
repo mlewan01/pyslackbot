@@ -5,7 +5,8 @@ import time
 class slackMsg(object):
 
     def __init__(self):
-        self.sl = SlackClient('xoxb-505197755744-505914604979-WLDuicOTjymw3FTUA3s7f3oB')
+        # self.sl = SlackClient('xoxb-505197755744-505914604979-kNaKgNUaa9deu56s56DJrvqe')
+        self.sl = None
         self.inpu = [{'type': 'message', 'user': 'UEVTGF2HY', 'text': 'hello python',
                       'client_msg_id': '5fa911bf-90e4-4e74-a38f-9c070cc1ad2c', 'team': 'TEV5TN7MW',
                       'channel': 'DEX23LF2B',
@@ -17,7 +18,15 @@ class slackMsg(object):
         self.myName = 'le.wy'
         self.myID = 'UEVTGF2HY'
 
+    def getOATHID(self):  # Bot User OAuth Access Token
+        file = open("oauth.txt", "r")
+        id = file.read()
+        file.close()
+        return id
+
     def slackConnect(self):
+        id = self.getOATHID()
+        self.sl = SlackClient(id)
         return self.sl.rtm_connect()
 
     def slackReadRTM(self):
@@ -144,11 +153,18 @@ class mainFunc(slackMsg):
             inp = str(inp).split("/")
             ii = inp[0].strip(' ')
             iii = inp[1].strip(' ')
-            ret = "yes, I do math: " + str(float(ii) / float(iii))
-            print(ret)
-            return ret
+            try:
+                ret = "yes, I do math: "
+                div = str(float(ii) / float(iii))
+                print(ret + " " + div)
+                return ret
+            except ZeroDivisionError:
+                msg = ' just not division by 0...'
+                print(ret + " " + msg)
+                return ret + " " + msg
         else:
             return inp
+
 
 if __name__ == "__main__":
     instance = mainFunc()
