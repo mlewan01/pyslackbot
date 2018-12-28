@@ -5,7 +5,6 @@ import time
 class slackMsg(object):
 
     def __init__(self):
-        # self.sl = SlackClient('xoxb-505197755744-505914604979-kNaKgNUaa9deu56s56DJrvqe')
         self.sl = None
         self.inpu = [{'type': 'message', 'user': 'UEVTGF2HY', 'text': 'hello python',
                       'client_msg_id': '5fa911bf-90e4-4e74-a38f-9c070cc1ad2c', 'team': 'TEV5TN7MW',
